@@ -1,21 +1,20 @@
 package com.jmreisswitz.creditcards.infrastructure.configuration;
 
+import com.jmreisswitz.creditcards.application.RegisterService;
 import com.jmreisswitz.creditcards.domain.UserRepository;
-import com.jmreisswitz.creditcards.infrastructure.persistence.InMemoryUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-public class RepositoriesConfiguration {
+public class ServicesConfiguration {
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private UserRepository userRepository;
 
     @Bean
-    public UserRepository userRepository() {
-        return new InMemoryUserRepository(passwordEncoder);
+    public RegisterService registerService() {
+        return new RegisterService(userRepository);
     }
 
 }

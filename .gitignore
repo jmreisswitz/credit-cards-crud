@@ -33,3 +33,4 @@ build/
 .vscode/
 
 mysql/mysql.sock
+mysql/*

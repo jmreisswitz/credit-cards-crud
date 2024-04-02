@@ -1,0 +1,24 @@
+package com.jmreisswitz.creditcards.infrastructure.security;
+
+import com.jmreisswitz.creditcards.domain.User;
+import org.springframework.security.core.userdetails.UserDetails;
+
+public class UserDetailsMapper {
+
+    private UserDetailsMapper() {
+        // static class
+    }
+
+    public static UserDetails from(User user) {
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.username())
+                .password(user.password())
+                .authorities("USER")
+                .accountExpired(false)
+                .accountLocked(false)
+                .credentialsExpired(false)
+                .disabled(false)
+                .build();
+    }
+
+}

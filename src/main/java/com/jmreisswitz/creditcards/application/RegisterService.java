@@ -1,8 +1,6 @@
 package com.jmreisswitz.creditcards.application;
 
-import com.jmreisswitz.creditcards.domain.user.User;
-import com.jmreisswitz.creditcards.domain.user.UserAlreadyExistsException;
-import com.jmreisswitz.creditcards.domain.user.UserRepository;
+import com.jmreisswitz.creditcards.domain.user.*;
 
 public class RegisterService {
 
@@ -13,28 +11,17 @@ public class RegisterService {
     }
 
     public void register(Command command) {
-        User user = new User(command.getUsername(), command.getPassword());
-        if (userRepository.findByLogin(user.username()) != null) {
+        User user = command.asUser();
+        if (userRepository.findBy(user.username()) != null) {
             throw new UserAlreadyExistsException("User already exists");
         }
         userRepository.save(user);
     }
 
-    public static final class Command {
-        private final String username;
-        private final String password;
+    public record Command(String username, String password) {
 
-        public Command(String username, String password) {
-            this.username = username;
-            this.password = password;
+        public User asUser() {
+                return new User(new Username(username), new UserPassword(password));
+            }
         }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-    }
 }

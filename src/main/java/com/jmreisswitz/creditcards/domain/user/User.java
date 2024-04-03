@@ -2,19 +2,20 @@ package com.jmreisswitz.creditcards.domain.user;
 
 public class User {
 
-    private final String username;
-    private final String password;
+    private Username username;
+    private UserPassword password;
 
-    public User(String username, String password) {
+    public User(Username username, UserPassword password) {
         this.username = username;
         this.password = password;
     }
 
-    public String username() {
+    public Username username() {
         return username;
     }
 
-    public String password() {
+    public UserPassword password() {
         return password;
     }
+
 }

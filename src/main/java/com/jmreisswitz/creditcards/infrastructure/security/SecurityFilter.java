@@ -2,6 +2,7 @@ package com.jmreisswitz.creditcards.infrastructure.security;
 
 
 import com.jmreisswitz.creditcards.domain.user.UserRepository;
+import com.jmreisswitz.creditcards.domain.user.Username;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
         if (token != null) {
             var login = jwtUtils.validateToken(token);
-            var user = userRepository.findByLogin(login);
+            var user = userRepository.findBy(new Username(login));
             var userDetails = UserDetailsMapper.from(user);
 
             var authentication = new UsernamePasswordAuthenticationToken(user, null, userDetails.getAuthorities());

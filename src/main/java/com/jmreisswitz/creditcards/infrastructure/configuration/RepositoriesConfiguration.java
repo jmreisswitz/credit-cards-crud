@@ -1,6 +1,7 @@
 package com.jmreisswitz.creditcards.infrastructure.configuration;
 
 import com.jmreisswitz.creditcards.domain.user.UserRepository;
+import com.jmreisswitz.creditcards.infrastructure.persistence.EncodedUserRepository;
 import com.jmreisswitz.creditcards.infrastructure.persistence.InMemoryUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +16,8 @@ public class RepositoriesConfiguration {
 
     @Bean
     public UserRepository userRepository() {
-        return new InMemoryUserRepository(passwordEncoder);
+        UserRepository inMemoryUserRepository = new InMemoryUserRepository();
+        return new EncodedUserRepository(inMemoryUserRepository, passwordEncoder);
     }
 
 }

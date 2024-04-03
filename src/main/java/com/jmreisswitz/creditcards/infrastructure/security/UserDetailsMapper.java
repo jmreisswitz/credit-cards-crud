@@ -11,8 +11,8 @@ public class UserDetailsMapper {
 
     public static UserDetails from(User user) {
         return org.springframework.security.core.userdetails.User
-                .withUsername(user.username())
-                .password(user.password())
+                .withUsername(user.username().value())
+                .password(user.password().value())
                 .authorities("USER")
                 .accountExpired(false)
                 .accountLocked(false)

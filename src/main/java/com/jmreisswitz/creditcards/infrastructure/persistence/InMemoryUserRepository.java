@@ -1,30 +1,28 @@
 package com.jmreisswitz.creditcards.infrastructure.persistence;
 
-import com.jmreisswitz.creditcards.domain.user.User;
-import com.jmreisswitz.creditcards.domain.user.UserRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import com.jmreisswitz.creditcards.domain.user.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class InMemoryUserRepository implements UserRepository {
 
-    private final Map<String, User> users;
-    private final PasswordEncoder passwordEncoder;
+    private final Map<Username, User> users;
 
-    public InMemoryUserRepository(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
+    public InMemoryUserRepository() {
         users = new HashMap<>();
-        users.put("username", new User("username", "$2a$10$6lboeNMrylD90Rftp7t.COthxSO1ykGUd5k85Ghti20ZuFJ1awiBa"));
+        User user = new User(
+                new Username("username"),
+                new UserPassword("$2a$10$6lboeNMrylD90Rftp7t.COthxSO1ykGUd5k85Ghti20ZuFJ1awiBa"));
+        save(user);
     }
 
-    public User findByLogin(String login) {
-        return users.get(login);
+    public User findBy(Username username) {
+        return users.get(username);
     }
 
     public void save(User user) {
-        User encodedUser = new User(user.username(), passwordEncoder.encode(user.password()));
-        users.put(user.username(), encodedUser);
+        users.put(user.username(), user);
     }
 
 }

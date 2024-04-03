@@ -7,7 +7,6 @@ import com.jmreisswitz.creditcards.infrastructure.persistence.EncodedUserReposit
 import com.jmreisswitz.creditcards.infrastructure.persistence.InMemoryCreditCardRepository;
 import com.jmreisswitz.creditcards.infrastructure.persistence.InMemoryUserRepository;
 import com.jmreisswitz.creditcards.infrastructure.security.CreditCardDataEncoder;
-import com.jmreisswitz.creditcards.infrastructure.security.SpringCreditCardDataEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +18,9 @@ public class RepositoriesConfiguration {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private CreditCardDataEncoder creditCardDataEncoder;
+
     @Bean
     public UserRepository userRepository() {
         UserRepository inMemoryUserRepository = new InMemoryUserRepository();
@@ -28,7 +30,6 @@ public class RepositoriesConfiguration {
     @Bean
     public CreditCardRepository creditCardRepository() {
         CreditCardRepository creditCardRepository = new InMemoryCreditCardRepository();
-        CreditCardDataEncoder encoder = new SpringCreditCardDataEncoder(passwordEncoder);
-        return new EncodedCreditCardRepository(creditCardRepository, encoder);
+        return new EncodedCreditCardRepository(creditCardRepository, creditCardDataEncoder);
     }
 }

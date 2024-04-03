@@ -1,8 +1,8 @@
 package com.jmreisswitz.creditcards.application;
 
-import com.jmreisswitz.creditcards.domain.User;
-import com.jmreisswitz.creditcards.domain.UserAlreadyExistsException;
-import com.jmreisswitz.creditcards.domain.UserRepository;
+import com.jmreisswitz.creditcards.domain.user.User;
+import com.jmreisswitz.creditcards.domain.user.UserAlreadyExistsException;
+import com.jmreisswitz.creditcards.domain.user.UserRepository;
 
 public class RegisterService {
 

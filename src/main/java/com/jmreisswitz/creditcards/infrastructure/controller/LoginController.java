@@ -1,7 +1,7 @@
 package com.jmreisswitz.creditcards.infrastructure.controller;
 
 import com.jmreisswitz.creditcards.application.RegisterService;
-import com.jmreisswitz.creditcards.domain.UserAlreadyExistsException;
+import com.jmreisswitz.creditcards.domain.user.UserAlreadyExistsException;
 import com.jmreisswitz.creditcards.infrastructure.controller.request.LoginRequest;
 import com.jmreisswitz.creditcards.infrastructure.controller.response.LoginResponse;
 import com.jmreisswitz.creditcards.infrastructure.security.JwtUtils;

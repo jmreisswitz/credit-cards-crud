@@ -1,7 +1,7 @@
 package com.jmreisswitz.creditcards.infrastructure.persistence;
 
-import com.jmreisswitz.creditcards.domain.User;
-import com.jmreisswitz.creditcards.domain.UserRepository;
+import com.jmreisswitz.creditcards.domain.user.User;
+import com.jmreisswitz.creditcards.domain.user.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.HashMap;

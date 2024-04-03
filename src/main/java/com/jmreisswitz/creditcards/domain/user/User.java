@@ -1,4 +1,4 @@
-package com.jmreisswitz.creditcards.domain;
+package com.jmreisswitz.creditcards.domain.user;
 
 public class User {
 

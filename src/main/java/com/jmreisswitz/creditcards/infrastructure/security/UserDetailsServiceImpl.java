@@ -1,6 +1,6 @@
 package com.jmreisswitz.creditcards.infrastructure.security;
 
-import com.jmreisswitz.creditcards.domain.UserRepository;
+import com.jmreisswitz.creditcards.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

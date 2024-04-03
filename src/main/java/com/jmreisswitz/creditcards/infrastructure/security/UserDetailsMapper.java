@@ -1,6 +1,6 @@
 package com.jmreisswitz.creditcards.infrastructure.security;
 
-import com.jmreisswitz.creditcards.domain.User;
+import com.jmreisswitz.creditcards.domain.user.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserDetailsMapper {

@@ -1,7 +1,7 @@
 package com.jmreisswitz.creditcards.infrastructure.security;
 
 
-import com.jmreisswitz.creditcards.domain.UserRepository;
+import com.jmreisswitz.creditcards.domain.user.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

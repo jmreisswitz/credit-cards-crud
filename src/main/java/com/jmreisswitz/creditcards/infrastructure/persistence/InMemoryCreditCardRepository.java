@@ -15,7 +15,7 @@ public class InMemoryCreditCardRepository implements CreditCardRepository {
 
     @Override
     public CreditCard save(CreditCard creditCard) {
-        creditCard.setId(new CreditCardId(counter++));
+        creditCard.setId(new CreditCardId(++counter));
         creditCards.add(creditCard);
         return creditCard;
     }

@@ -1,6 +1,7 @@
 package com.jmreisswitz.creditcards.infrastructure.configuration;
 
 import com.jmreisswitz.creditcards.application.RegisterService;
+import com.jmreisswitz.creditcards.application.RetrieveCreditCardService;
 import com.jmreisswitz.creditcards.application.SaveCreditCardService;
 import com.jmreisswitz.creditcards.domain.creditcard.CreditCardRepository;
 import com.jmreisswitz.creditcards.domain.user.UserRepository;
@@ -25,6 +26,11 @@ public class ServicesConfiguration {
     @Bean
     public SaveCreditCardService saveCreditCardService() {
         return new SaveCreditCardService(creditCardRepository);
+    }
+
+    @Bean
+    public RetrieveCreditCardService retrieveCreditCardService() {
+        return new RetrieveCreditCardService(creditCardRepository);
     }
 
 }

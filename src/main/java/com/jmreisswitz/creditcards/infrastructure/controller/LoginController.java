@@ -32,8 +32,7 @@ public class LoginController {
                 loginRequest.username(), loginRequest.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        org.springframework.security.core.userdetails.User principal =
-                (org.springframework.security.core.userdetails.User) auth.getPrincipal();
+        var principal = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
         var token = jwtUtils.generateToken(principal.getUsername());
 
         return ResponseEntity.ok(new LoginResponse(token));

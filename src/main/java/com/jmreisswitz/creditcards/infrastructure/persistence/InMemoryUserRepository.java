@@ -8,6 +8,7 @@ import java.util.Map;
 public class InMemoryUserRepository implements UserRepository {
 
     private final Map<Username, User> users;
+    private Long counter = 0L;
 
     public InMemoryUserRepository() {
         users = new HashMap<>();
@@ -22,6 +23,10 @@ public class InMemoryUserRepository implements UserRepository {
     }
 
     public void save(User user) {
+        if (users.containsKey(user.username())) {
+            users.put(user.username(), user);
+        }
+        user.setId(new UserId(counter++));
         users.put(user.username(), user);
     }
 

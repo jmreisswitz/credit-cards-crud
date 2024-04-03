@@ -22,6 +22,7 @@ public class JwtUtils {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withSubject(username)
+                    .withIssuer("auth-api")
                     .withExpiresAt(genExpirationDate())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {

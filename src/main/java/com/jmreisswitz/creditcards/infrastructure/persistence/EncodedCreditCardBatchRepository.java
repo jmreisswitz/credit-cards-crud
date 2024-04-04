@@ -4,6 +4,7 @@ import com.jmreisswitz.creditcards.domain.creditcard.batch.CreditCardBatch;
 import com.jmreisswitz.creditcards.domain.creditcard.batch.CreditCardBatchRepository;
 import com.jmreisswitz.creditcards.infrastructure.security.CreditCardDataEncoder;
 
+import java.util.Collection;
 import java.util.List;
 
 public class EncodedCreditCardBatchRepository implements CreditCardBatchRepository {
@@ -28,11 +29,17 @@ public class EncodedCreditCardBatchRepository implements CreditCardBatchReposito
         delegate.save(encodedCreditCardBatch);
     }
 
+    @Override
+    public Collection<CreditCardBatch> findNotCompleted() {
+        return delegate.findNotCompleted();
+    }
+
     private List<CreditCardBatch.Line> encodeCreditCards(CreditCardBatch creditCardBatch) {
         return creditCardBatch.creditCards().stream()
                 .map(creditCardLine -> new CreditCardBatch.Line(
                         creditCardLine.identifier(),
                         creditCardDataEncoder.encode(creditCardLine.creditCardNumber()),
+                        creditCardLine.lastFourDigits(),
                         creditCardLine.status())).toList();
     }
 }

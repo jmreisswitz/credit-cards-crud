@@ -1,22 +1,17 @@
 package com.jmreisswitz.creditcards.application;
 
 import com.jmreisswitz.creditcards.domain.creditcard.CreditCard;
-import com.jmreisswitz.creditcards.domain.creditcard.CreditCardRepository;
-import com.jmreisswitz.creditcards.domain.creditcard.validator.CreditCardDataValidator;
+import com.jmreisswitz.creditcards.domain.creditcard.SaveCreditCardDomainService;
 
 public class SaveCreditCardService {
 
-    private final CreditCardRepository creditCardRepository;
-    private final CreditCardDataValidator creditCardDataValidator;
+    private final SaveCreditCardDomainService domainService;
 
-    public SaveCreditCardService(CreditCardRepository creditCardRepository,
-                                 CreditCardDataValidator creditCardDataValidator) {
-        this.creditCardRepository = creditCardRepository;
-        this.creditCardDataValidator = creditCardDataValidator;
+    public SaveCreditCardService(SaveCreditCardDomainService domainService) {
+        this.domainService = domainService;
     }
 
     public CreditCard save(CreditCard creditCard) {
-        creditCardDataValidator.validate(creditCard.data());
-        return creditCardRepository.save(creditCard);
+        return domainService.save(creditCard);
     }
 }

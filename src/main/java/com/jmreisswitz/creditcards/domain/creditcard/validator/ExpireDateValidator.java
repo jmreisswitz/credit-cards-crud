@@ -6,6 +6,9 @@ import com.jmreisswitz.creditcards.domain.creditcard.InvalidCreditCardDataExcept
 public class ExpireDateValidator implements CreditCardDataValidator {
     @Override
     public void validate(CreditCardData creditCard) {
+        if (creditCard.expireDate() == null) {
+            return;
+        }
         if (creditCard.expireDate().year() < 2021) {
             throw new InvalidCreditCardDataException("Year must be greater than 2021");
         }

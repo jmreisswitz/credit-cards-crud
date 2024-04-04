@@ -18,4 +18,11 @@ public class InMemoryCreditCardBatchRepository implements CreditCardBatchReposit
     public void save(CreditCardBatch creditCardBatch) {
         creditCardBatches.add(creditCardBatch);
     }
+
+    @Override
+    public Collection<CreditCardBatch> findNotCompleted() {
+        return creditCardBatches.stream()
+                .filter(creditCardBatch -> !creditCardBatch.isCompleted())
+                .toList();
+    }
 }

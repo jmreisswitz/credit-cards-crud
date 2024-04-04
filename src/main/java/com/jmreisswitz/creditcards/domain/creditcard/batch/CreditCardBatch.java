@@ -1,12 +1,13 @@
 package com.jmreisswitz.creditcards.domain.creditcard.batch;
 
-import com.jmreisswitz.creditcards.domain.creditcard.CreditCardNumber;
-import com.jmreisswitz.creditcards.domain.creditcard.InvalidCreditCardDataException;
+import com.jmreisswitz.creditcards.domain.creditcard.*;
 import com.jmreisswitz.creditcards.domain.creditcard.validator.CreditCardNumberValidator;
 import com.jmreisswitz.creditcards.domain.user.UserId;
 
 import java.time.LocalDate;
 import java.util.Collection;
+
+import static com.jmreisswitz.creditcards.domain.creditcard.batch.CreditCardBatchLineStatus.TO_BE_PROCESSED;
 
 public class CreditCardBatch {
     private final UserId userId;
@@ -31,6 +32,17 @@ public class CreditCardBatch {
                 .toList();
     }
 
+    public void process(SaveCreditCardDomainService saveCreditCardService) {
+        creditCards().stream()
+                .filter(line -> line.status() == TO_BE_PROCESSED)
+                .forEach(line -> line.process(userId, saveCreditCardService));
+    }
+
+    public boolean isCompleted() {
+        return creditCards.stream()
+                .allMatch(line -> line.status() != CreditCardBatchLineStatus.TO_BE_PROCESSED);
+    }
+
     public String name() {
         return name;
     }
@@ -47,9 +59,21 @@ public class CreditCardBatch {
         return creditCards;
     }
 
-    public static record Line(String identifier,
-                              CreditCardNumber creditCardNumber,
-                              CreditCardBatchLineStatus status) {
+    public static class Line {
+        private final String identifier;
+        private final CreditCardNumber creditCardNumber;
+        private final String lastFourDigits;
+        private CreditCardBatchLineStatus status;
+
+        public Line(String identifier,
+                    CreditCardNumber creditCardNumber,
+                    String lastFourDigits,
+                    CreditCardBatchLineStatus status) {
+            this.identifier = identifier;
+            this.creditCardNumber = creditCardNumber;
+            this.lastFourDigits = lastFourDigits;
+            this.status = status;
+        }
 
         public boolean isValid(CreditCardNumberValidator creditCardNumberValidator) {
             try {
@@ -61,8 +85,38 @@ public class CreditCardBatch {
         }
 
         public Line asInvalid() {
-            return new Line(identifier, creditCardNumber, CreditCardBatchLineStatus.INVALID);
+            return new Line(identifier, creditCardNumber, lastFourDigits, CreditCardBatchLineStatus.INVALID);
         }
 
+        public void setAsProcessed() {
+            status = CreditCardBatchLineStatus.PROCESSED;
+        }
+
+        public void process(UserId userId, SaveCreditCardDomainService saveCreditCardService) {
+            saveAsCreditCard(userId, saveCreditCardService);
+            setAsProcessed();
+        }
+
+        private void saveAsCreditCard(UserId userId, SaveCreditCardDomainService saveCreditCardService) {
+            saveCreditCardService.save(new CreditCard(userId,
+                    new CreditCardData(creditCardNumber, null, null, lastFourDigits, null)
+            ));
+        }
+
+        public String identifier() {
+            return identifier;
+        }
+
+        public CreditCardNumber creditCardNumber() {
+            return creditCardNumber;
+        }
+
+        public String lastFourDigits() {
+            return lastFourDigits;
+        }
+
+        public CreditCardBatchLineStatus status() {
+            return status;
+        }
     }
 }

@@ -1,10 +1,8 @@
 package com.jmreisswitz.creditcards.infrastructure.configuration;
 
-import com.jmreisswitz.creditcards.application.RegisterService;
-import com.jmreisswitz.creditcards.application.RetrieveCreditCardService;
-import com.jmreisswitz.creditcards.application.SaveCreditCardBatchService;
-import com.jmreisswitz.creditcards.application.SaveCreditCardService;
+import com.jmreisswitz.creditcards.application.*;
 import com.jmreisswitz.creditcards.domain.creditcard.CreditCardRepository;
+import com.jmreisswitz.creditcards.domain.creditcard.SaveCreditCardDomainService;
 import com.jmreisswitz.creditcards.domain.creditcard.batch.CreditCardBatchRepository;
 import com.jmreisswitz.creditcards.domain.creditcard.validator.CreditCardDataValidator;
 import com.jmreisswitz.creditcards.domain.creditcard.validator.CreditCardNumberValidator;
@@ -32,13 +30,18 @@ public class ServicesConfiguration {
     private CreditCardNumberValidator creditCardNumberValidator;
 
     @Bean
+    public SaveCreditCardDomainService saveCreditCardDomainService() {
+        return new SaveCreditCardDomainService(creditCardRepository, creditCardDataValidator);
+    }
+
+    @Bean
     public RegisterService registerService() {
         return new RegisterService(userRepository);
     }
 
     @Bean
     public SaveCreditCardService saveCreditCardService() {
-        return new SaveCreditCardService(creditCardRepository, creditCardDataValidator);
+        return new SaveCreditCardService(saveCreditCardDomainService());
     }
 
     @Bean
@@ -49,6 +52,11 @@ public class ServicesConfiguration {
     @Bean
     public SaveCreditCardBatchService saveCreditCardBatchService() {
         return new SaveCreditCardBatchService(creditCardBatchRepository, creditCardNumberValidator);
+    }
+
+    @Bean
+    public ProcessBatchesService processBatchesService() {
+        return new ProcessBatchesService(creditCardBatchRepository, saveCreditCardDomainService());
     }
 
 }

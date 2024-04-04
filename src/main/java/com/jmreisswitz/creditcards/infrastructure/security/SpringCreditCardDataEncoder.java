@@ -16,11 +16,16 @@ public class SpringCreditCardDataEncoder implements CreditCardDataEncoder {
     @Override
     public CreditCardData encode(CreditCardData creditCard) {
         return new CreditCardData(
-                new CreditCardNumber(passwordEncoder.encode(creditCard.number().value())),
+                encode(creditCard.number()),
                 new CreditCardCvv(passwordEncoder.encode(creditCard.cvv().value())),
                 creditCard.expireDate(),
                 creditCard.lastFourDigits(),
                 creditCard.holder()
         );
+    }
+
+    @Override
+    public CreditCardNumber encode(CreditCardNumber creditCardNumber) {
+        return new CreditCardNumber(passwordEncoder.encode(creditCardNumber.value()));
     }
 }

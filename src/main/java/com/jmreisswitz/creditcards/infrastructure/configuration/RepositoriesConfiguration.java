@@ -1,11 +1,9 @@
 package com.jmreisswitz.creditcards.infrastructure.configuration;
 
 import com.jmreisswitz.creditcards.domain.creditcard.CreditCardRepository;
+import com.jmreisswitz.creditcards.domain.creditcard.batch.CreditCardBatchRepository;
 import com.jmreisswitz.creditcards.domain.user.UserRepository;
-import com.jmreisswitz.creditcards.infrastructure.persistence.EncodedCreditCardRepository;
-import com.jmreisswitz.creditcards.infrastructure.persistence.EncodedUserRepository;
-import com.jmreisswitz.creditcards.infrastructure.persistence.InMemoryCreditCardRepository;
-import com.jmreisswitz.creditcards.infrastructure.persistence.InMemoryUserRepository;
+import com.jmreisswitz.creditcards.infrastructure.persistence.*;
 import com.jmreisswitz.creditcards.infrastructure.security.CreditCardDataEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,5 +29,11 @@ public class RepositoriesConfiguration {
     public CreditCardRepository creditCardRepository() {
         CreditCardRepository creditCardRepository = new InMemoryCreditCardRepository();
         return new EncodedCreditCardRepository(creditCardRepository, creditCardDataEncoder);
+    }
+
+    @Bean
+    public CreditCardBatchRepository creditCardBatchRepository() {
+        var inMemoryCreditCardBatchRepository = new InMemoryCreditCardBatchRepository();
+        return new EncodedCreditCardBatchRepository(inMemoryCreditCardBatchRepository, creditCardDataEncoder);
     }
 }

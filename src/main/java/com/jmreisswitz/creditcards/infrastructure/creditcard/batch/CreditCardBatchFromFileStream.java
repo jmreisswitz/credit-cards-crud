@@ -2,6 +2,7 @@ package com.jmreisswitz.creditcards.infrastructure.creditcard.batch;
 
 import com.jmreisswitz.creditcards.domain.creditcard.CreditCardNumber;
 import com.jmreisswitz.creditcards.domain.creditcard.batch.CreditCardBatch;
+import com.jmreisswitz.creditcards.domain.creditcard.batch.CreditCardBatchLineStatus;
 import com.jmreisswitz.creditcards.domain.user.UserId;
 
 import java.io.InputStream;
@@ -65,7 +66,8 @@ public class CreditCardBatchFromFileStream {
         String identifier = line.substring(0, LINE_ID_LENGTH).trim();
         String creditCardNumber = line.substring(LINE_ID_LENGTH + 1,
                 LINE_ID_LENGTH + CREDIT_CARD_NUMBER_LENGTH + 1).trim();
-        return new CreditCardBatch.Line(identifier, new CreditCardNumber(creditCardNumber));
+        return new CreditCardBatch.Line(identifier, new CreditCardNumber(creditCardNumber),
+                CreditCardBatchLineStatus.TO_BE_PROCESSED);
     }
 
 }

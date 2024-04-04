@@ -32,6 +32,7 @@ public class EncodedCreditCardBatchRepository implements CreditCardBatchReposito
         return creditCardBatch.creditCards().stream()
                 .map(creditCardLine -> new CreditCardBatch.Line(
                         creditCardLine.identifier(),
-                        creditCardDataEncoder.encode(creditCardLine.creditCardNumber()))).toList();
+                        creditCardDataEncoder.encode(creditCardLine.creditCardNumber()),
+                        creditCardLine.status())).toList();
     }
 }

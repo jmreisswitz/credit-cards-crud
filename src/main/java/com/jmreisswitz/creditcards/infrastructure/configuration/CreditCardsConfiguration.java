@@ -24,8 +24,14 @@ public class CreditCardsConfiguration {
     @Bean
     public CreditCardDataValidator creditCardDataValidator() {
         return new ComposedCreditCardDataValidator(List.of(
-            new CvvValidator(), new ExpireDateValidator(), new CreditCardNumberValidator()
+            new CvvValidator(), new ExpireDateValidator(),
+                new CreditCardDataNumberValidator(creditCardNumberValidator())
         ));
+    }
+
+    @Bean
+    public CreditCardNumberValidator creditCardNumberValidator() {
+        return new DefaultCreditCardNumberValidator();
     }
 
 }

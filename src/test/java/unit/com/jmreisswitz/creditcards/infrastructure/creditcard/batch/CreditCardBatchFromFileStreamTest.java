@@ -18,7 +18,7 @@ class CreditCardBatchFromFileStreamTest {
     @Test
     void createFromFile() throws IOException {
         CreditCardBatch creditCardBatch;
-        try (FileInputStream inputStream = new FileInputStream("src/test/java/resources/creditcardbatch/batch.txt")) {
+        try (FileInputStream inputStream = new FileInputStream("src/test/resources/credit-card-batch/batch.txt")) {
             CreditCardBatchFromFileStream creditCardBatchFromFileStream = new CreditCardBatchFromFileStream(inputStream);
             creditCardBatch = creditCardBatchFromFileStream.readFor(new UserId(1L));
         }

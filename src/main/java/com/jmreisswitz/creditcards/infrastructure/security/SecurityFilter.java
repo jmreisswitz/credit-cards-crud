@@ -1,14 +1,13 @@
 package com.jmreisswitz.creditcards.infrastructure.security;
 
 
-import com.jmreisswitz.creditcards.domain.user.UserRepository;
-import com.jmreisswitz.creditcards.domain.user.Username;
+import com.jmreisswitz.creditcards.domain.user.UserId;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -18,23 +17,18 @@ import java.io.IOException;
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
 
-    @Autowired
-    JwtUtils jwtUtils;
+    private final JwtUtils jwtUtils;
 
-    @Autowired
-    UserRepository userRepository;
+    public SecurityFilter(JwtUtils jwtUtils) {
+        this.jwtUtils = jwtUtils;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         var token = this.recoverToken(request);
         if (token != null) {
-            var login = jwtUtils.validateToken(token);
-            var user = userRepository.findBy(new Username(login));
-            var userDetails = UserDetailsMapper.from(user);
-
-            var authentication = new UsernamePasswordAuthenticationToken(user, null, userDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            tryToAuthenticate(token);
         }
         filterChain.doFilter(request, response);
     }
@@ -46,4 +40,20 @@ public class SecurityFilter extends OncePerRequestFilter {
         }
         return authHeader.replace("Bearer ", "");
     }
+
+    private void tryToAuthenticate(String token) {
+        String userIdAsString = jwtUtils.validateToken(token);
+        if (userIdAsString.isEmpty()) {
+            return;
+        }
+        UserId userId = new UserId(Long.parseLong(userIdAsString));
+        authenticate(userId);
+    }
+
+    private static void authenticate(UserId userId) {
+        var authentication = new UsernamePasswordAuthenticationToken(userId, null,
+                AuthorityUtils.createAuthorityList("USER"));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
 }

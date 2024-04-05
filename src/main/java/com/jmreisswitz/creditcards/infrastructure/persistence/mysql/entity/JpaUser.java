@@ -1,4 +1,4 @@
-package com.jmreisswitz.creditcards.infrastructure.persistence.mysql;
+package com.jmreisswitz.creditcards.infrastructure.persistence.mysql.entity;
 
 import jakarta.persistence.*;
 

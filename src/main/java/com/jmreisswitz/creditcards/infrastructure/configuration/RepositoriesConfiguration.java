@@ -5,7 +5,9 @@ import com.jmreisswitz.creditcards.domain.creditcard.batch.CreditCardBatchReposi
 import com.jmreisswitz.creditcards.domain.user.UserRepository;
 import com.jmreisswitz.creditcards.infrastructure.persistence.*;
 import com.jmreisswitz.creditcards.infrastructure.persistence.mysql.JpaAdaptedUserRepository;
-import com.jmreisswitz.creditcards.infrastructure.persistence.mysql.JpaUserRepository;
+import com.jmreisswitz.creditcards.infrastructure.persistence.mysql.JpaAdapterCreditCardRepository;
+import com.jmreisswitz.creditcards.infrastructure.persistence.mysql.jparepository.JpaCreditCardRepository;
+import com.jmreisswitz.creditcards.infrastructure.persistence.mysql.jparepository.JpaUserRepository;
 import com.jmreisswitz.creditcards.infrastructure.security.CreditCardDataEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +26,9 @@ public class RepositoriesConfiguration {
     @Autowired
     private JpaUserRepository jpaUserRepository;
 
+    @Autowired
+    private JpaCreditCardRepository jpaCreditCardRepository;
+
     @Bean
     public UserRepository userRepository() {
         var jpaAdaptedUserRepository = new JpaAdaptedUserRepository(this.jpaUserRepository);
@@ -32,7 +37,7 @@ public class RepositoriesConfiguration {
 
     @Bean
     public CreditCardRepository creditCardRepository() {
-        CreditCardRepository creditCardRepository = new InMemoryCreditCardRepository();
+        CreditCardRepository creditCardRepository = new JpaAdapterCreditCardRepository(jpaCreditCardRepository);
         return new EncodedCreditCardRepository(creditCardRepository, creditCardDataEncoder);
     }
 

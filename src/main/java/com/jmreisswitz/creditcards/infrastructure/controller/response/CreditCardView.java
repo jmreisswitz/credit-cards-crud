@@ -4,23 +4,23 @@ import com.jmreisswitz.creditcards.domain.creditcard.CreditCard;
 
 public class CreditCardView {
 
-    private Long id;
+    private Integer id;
     private String lastFourDigits;
 
     public static CreditCardView from(CreditCard creditCard) {
         return new CreditCardView(creditCard.id().value(), creditCard.data().lastFourDigits());
     }
 
-    public CreditCardView(Long id, String lastFourDigits) {
+    public CreditCardView(Integer id, String lastFourDigits) {
         this.id = id;
         this.lastFourDigits = lastFourDigits;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

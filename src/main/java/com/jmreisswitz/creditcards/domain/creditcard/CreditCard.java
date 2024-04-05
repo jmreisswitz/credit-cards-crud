@@ -13,6 +13,12 @@ public class CreditCard {
         this.data = data;
     }
 
+    public CreditCard(CreditCardId id, UserId userId, CreditCardData data) {
+        this.id = id;
+        this.userId = userId;
+        this.data = data;
+    }
+
     public void setId(CreditCardId id) {
         this.id = id;
     }

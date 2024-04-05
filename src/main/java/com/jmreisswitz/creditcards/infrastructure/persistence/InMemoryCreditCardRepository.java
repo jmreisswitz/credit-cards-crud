@@ -11,7 +11,7 @@ import java.util.Collection;
 public class InMemoryCreditCardRepository implements CreditCardRepository {
 
     private final Collection<CreditCard> creditCards = new ArrayList<>();
-    private Long counter = 0L;
+    private Integer counter = 0;
 
     @Override
     public CreditCard save(CreditCard creditCard) {

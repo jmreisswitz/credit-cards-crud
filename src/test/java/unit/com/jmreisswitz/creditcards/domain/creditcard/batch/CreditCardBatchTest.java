@@ -96,7 +96,7 @@ class CreditCardBatchTest {
 
         line.process(userId, service);
 
-        verify(service).saveNotValidating(any(CreditCard.class));
+        verify(service).save(any(CreditCard.class));
         assertThat(line.status(), is(CreditCardBatchLineStatus.PROCESSED));
     }
 

@@ -6,6 +6,7 @@ import com.jmreisswitz.creditcards.domain.user.UserId;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 
 
 public class CreditCardBatch {
@@ -75,6 +76,10 @@ public class CreditCardBatch {
         this.id = id;
     }
 
+    public void setCreditCards(List<Line> encodedCreditCards) {
+        this.creditCards = encodedCreditCards;
+    }
+
     public static class Line {
         private final String identifier;
         private final CreditCardNumber creditCardNumber;
@@ -114,7 +119,7 @@ public class CreditCardBatch {
         }
 
         private void saveAsCreditCard(UserId userId, SaveCreditCardDomainService saveCreditCardService) {
-            saveCreditCardService.saveNotValidating(new CreditCard(userId,
+            saveCreditCardService.save(new CreditCard(userId,
                     new CreditCardData(creditCardNumber, null, null, lastFourDigits, null)
             ));
         }

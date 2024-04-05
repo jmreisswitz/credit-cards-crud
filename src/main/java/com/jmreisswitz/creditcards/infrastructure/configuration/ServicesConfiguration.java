@@ -7,6 +7,7 @@ import com.jmreisswitz.creditcards.domain.creditcard.batch.CreditCardBatchReposi
 import com.jmreisswitz.creditcards.domain.creditcard.validator.CreditCardDataValidator;
 import com.jmreisswitz.creditcards.domain.creditcard.validator.CreditCardNumberValidator;
 import com.jmreisswitz.creditcards.domain.user.UserRepository;
+import com.jmreisswitz.creditcards.infrastructure.security.CreditCardDataEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,9 @@ public class ServicesConfiguration {
     private CreditCardRepository creditCardRepository;
 
     @Autowired
+    private CreditCardDataEncoder creditCardDataEncoder;
+
+    @Autowired
     private CreditCardDataValidator creditCardDataValidator;
 
     @Autowired
@@ -31,7 +35,7 @@ public class ServicesConfiguration {
 
     @Bean
     public SaveCreditCardDomainService saveCreditCardDomainService() {
-        return new SaveCreditCardDomainService(creditCardRepository, creditCardDataValidator);
+        return new SaveCreditCardDomainService(creditCardRepository);
     }
 
     @Bean
@@ -41,7 +45,7 @@ public class ServicesConfiguration {
 
     @Bean
     public SaveCreditCardService saveCreditCardService() {
-        return new SaveCreditCardService(saveCreditCardDomainService());
+        return new SaveCreditCardService(saveCreditCardDomainService(), creditCardDataEncoder, creditCardDataValidator);
     }
 
     @Bean
@@ -51,7 +55,8 @@ public class ServicesConfiguration {
 
     @Bean
     public SaveCreditCardBatchService saveCreditCardBatchService() {
-        return new SaveCreditCardBatchService(creditCardBatchRepository, creditCardNumberValidator);
+        return new SaveCreditCardBatchService(creditCardBatchRepository,
+                creditCardNumberValidator, creditCardDataEncoder);
     }
 
     @Bean

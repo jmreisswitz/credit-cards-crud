@@ -6,7 +6,7 @@ public class CreditCard {
 
     private CreditCardId id;
     private final UserId userId;
-    private final CreditCardData data;
+    private CreditCardData data;
 
     public CreditCard(UserId userId, CreditCardData data) {
         this.userId = userId;
@@ -29,6 +29,10 @@ public class CreditCard {
 
     public UserId userId() {
         return userId;
+    }
+
+    public void setData(CreditCardData data) {
+        this.data = data;
     }
 
     public CreditCardData data() {

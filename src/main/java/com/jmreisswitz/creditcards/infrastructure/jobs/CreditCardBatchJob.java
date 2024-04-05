@@ -16,7 +16,7 @@ public class CreditCardBatchJob {
         this.processBatchesService = processBatchesService;
     }
 
-    @Scheduled(cron = "0/10 * * * * ?")
+    @Scheduled(cron = "0 * * * * ?")
     public void run() {
         logger.info("Running CreditCardBatchJob");
         processBatchesService.processNotCompletedBatches();

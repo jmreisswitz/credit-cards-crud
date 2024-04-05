@@ -46,7 +46,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         if (userIdAsString.isEmpty()) {
             return;
         }
-        UserId userId = new UserId(Long.parseLong(userIdAsString));
+        UserId userId = new UserId(Integer.parseInt(userIdAsString));
         authenticate(userId);
     }
 

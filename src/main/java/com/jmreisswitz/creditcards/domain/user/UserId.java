@@ -1,4 +1,4 @@
 package com.jmreisswitz.creditcards.domain.user;
 
-public record UserId(Long value) {
+public record UserId(Integer value) {
 }

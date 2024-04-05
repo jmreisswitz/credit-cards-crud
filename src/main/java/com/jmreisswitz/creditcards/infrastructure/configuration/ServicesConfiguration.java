@@ -11,12 +11,16 @@ import com.jmreisswitz.creditcards.infrastructure.security.CreditCardDataEncoder
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class ServicesConfiguration {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private CreditCardRepository creditCardRepository;
@@ -39,8 +43,8 @@ public class ServicesConfiguration {
     }
 
     @Bean
-    public RegisterService registerService() {
-        return new RegisterService(userRepository);
+    public UserRegisterService registerService() {
+        return new UserRegisterService(userRepository, passwordEncoder);
     }
 
     @Bean

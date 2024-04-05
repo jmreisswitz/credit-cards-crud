@@ -35,6 +35,10 @@ public class User {
         return password;
     }
 
+    public void setPassword(UserPassword password) {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == null || !getClass().equals(other.getClass())) {

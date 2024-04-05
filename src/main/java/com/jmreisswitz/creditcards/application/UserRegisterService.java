@@ -1,13 +1,16 @@
 package com.jmreisswitz.creditcards.application;
 
 import com.jmreisswitz.creditcards.domain.user.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-public class RegisterService {
+public class UserRegisterService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public RegisterService(UserRepository userRepository) {
+    public UserRegisterService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void register(Command command) {
@@ -15,6 +18,8 @@ public class RegisterService {
         if (userRepository.findBy(user.username()) != null) {
             throw new UserAlreadyExistsException("User already exists");
         }
+        var encodedPassword = passwordEncoder.encode(user.password().value());
+        user.setPassword(new UserPassword(encodedPassword));
         userRepository.save(user);
     }
 

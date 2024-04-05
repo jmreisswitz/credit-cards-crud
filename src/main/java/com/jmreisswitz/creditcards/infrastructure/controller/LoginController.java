@@ -1,6 +1,6 @@
 package com.jmreisswitz.creditcards.infrastructure.controller;
 
-import com.jmreisswitz.creditcards.application.RegisterService;
+import com.jmreisswitz.creditcards.application.UserRegisterService;
 import com.jmreisswitz.creditcards.domain.user.UserAlreadyExistsException;
 import com.jmreisswitz.creditcards.infrastructure.controller.request.LoginRequest;
 import com.jmreisswitz.creditcards.infrastructure.controller.response.LoginResponse;
@@ -24,7 +24,7 @@ public class LoginController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private RegisterService registerService;
+    private UserRegisterService userRegisterService;
 
     @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
@@ -41,7 +41,7 @@ public class LoginController {
     @PostMapping(value = "/register")
     public ResponseEntity<String> register(@RequestBody LoginRequest loginRequest) {
         try {
-            registerService.register(new RegisterService.Command(loginRequest.username(), loginRequest.password()));
+            userRegisterService.register(new UserRegisterService.Command(loginRequest.username(), loginRequest.password()));
         } catch (UserAlreadyExistsException existsException) {
             return ResponseEntity.badRequest().body("Username already exists");
         }

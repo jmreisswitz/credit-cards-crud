@@ -1,6 +1,6 @@
-package com.jmreisswitz.creditcards.infrastructure.persistence.mysql.jparepository;
+package com.jmreisswitz.creditcards.infrastructure.persistence.jpa.jparepository;
 
-import com.jmreisswitz.creditcards.infrastructure.persistence.mysql.entity.JpaUser;
+import com.jmreisswitz.creditcards.infrastructure.persistence.jpa.entity.JpaUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

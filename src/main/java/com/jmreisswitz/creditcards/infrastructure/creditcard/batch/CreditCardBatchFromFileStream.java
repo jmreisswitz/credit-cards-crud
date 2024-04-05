@@ -65,7 +65,7 @@ public class CreditCardBatchFromFileStream {
     private CreditCardBatch.Line creditCardLine(String line) {
         String identifier = line.substring(0, LINE_ID_LENGTH).trim();
         String creditCardNumber = line.substring(LINE_ID_LENGTH + 1,
-                LINE_ID_LENGTH + CREDIT_CARD_NUMBER_LENGTH + 1).trim();
+                LINE_ID_LENGTH + CREDIT_CARD_NUMBER_LENGTH + 2).trim();
         return new CreditCardBatch.Line(identifier, new CreditCardNumber(creditCardNumber),
                 creditCardNumber.substring(12),
                 CreditCardBatchLineStatus.TO_BE_PROCESSED);

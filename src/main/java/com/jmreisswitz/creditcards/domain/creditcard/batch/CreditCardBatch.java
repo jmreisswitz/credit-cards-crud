@@ -98,7 +98,7 @@ public class CreditCardBatch {
         }
 
         private void saveAsCreditCard(UserId userId, SaveCreditCardDomainService saveCreditCardService) {
-            saveCreditCardService.save(new CreditCard(userId,
+            saveCreditCardService.saveNotValidating(new CreditCard(userId,
                     new CreditCardData(creditCardNumber, null, null, lastFourDigits, null)
             ));
         }
@@ -117,6 +117,15 @@ public class CreditCardBatch {
 
         public CreditCardBatchLineStatus status() {
             return status;
+        }
+
+        @Override
+        public String toString() {
+            return "Line{" +
+                    "identifier='" + identifier + '\'' +
+                    ", lastFourDigits='" + lastFourDigits + '\'' +
+                    ", status=" + status +
+                    '}';
         }
     }
 }

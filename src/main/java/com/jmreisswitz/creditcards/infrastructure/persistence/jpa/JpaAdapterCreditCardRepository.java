@@ -1,12 +1,12 @@
-package com.jmreisswitz.creditcards.infrastructure.persistence.mysql;
+package com.jmreisswitz.creditcards.infrastructure.persistence.jpa;
 
 import com.jmreisswitz.creditcards.domain.creditcard.CreditCard;
 import com.jmreisswitz.creditcards.domain.creditcard.CreditCardId;
 import com.jmreisswitz.creditcards.domain.creditcard.CreditCardRepository;
 import com.jmreisswitz.creditcards.domain.user.UserId;
-import com.jmreisswitz.creditcards.infrastructure.persistence.mysql.converter.JpaCreditCardConverter;
-import com.jmreisswitz.creditcards.infrastructure.persistence.mysql.entity.JpaCreditCard;
-import com.jmreisswitz.creditcards.infrastructure.persistence.mysql.jparepository.JpaCreditCardRepository;
+import com.jmreisswitz.creditcards.infrastructure.persistence.jpa.converter.JpaCreditCardConverter;
+import com.jmreisswitz.creditcards.infrastructure.persistence.jpa.entity.JpaCreditCard;
+import com.jmreisswitz.creditcards.infrastructure.persistence.jpa.jparepository.JpaCreditCardRepository;
 
 import java.util.Collection;
 

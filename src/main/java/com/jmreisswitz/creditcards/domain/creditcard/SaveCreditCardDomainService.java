@@ -16,4 +16,8 @@ public class SaveCreditCardDomainService {
         creditCardDataValidator.validate(creditCard.data());
         return creditCardRepository.save(creditCard);
     }
+
+    public CreditCard saveNotValidating(CreditCard creditCard) {
+        return creditCardRepository.save(creditCard);
+    }
 }

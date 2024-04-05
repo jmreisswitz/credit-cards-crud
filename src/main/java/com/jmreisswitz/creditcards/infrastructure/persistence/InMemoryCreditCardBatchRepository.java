@@ -5,10 +5,11 @@ import com.jmreisswitz.creditcards.domain.creditcard.batch.CreditCardBatchReposi
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class InMemoryCreditCardBatchRepository implements CreditCardBatchRepository {
 
-    private final Collection<CreditCardBatch> creditCardBatches;
+    private final List<CreditCardBatch> creditCardBatches;
 
     public InMemoryCreditCardBatchRepository() {
         this.creditCardBatches = new ArrayList<>();

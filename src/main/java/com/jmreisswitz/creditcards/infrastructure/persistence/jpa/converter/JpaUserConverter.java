@@ -1,10 +1,10 @@
-package com.jmreisswitz.creditcards.infrastructure.persistence.mysql.converter;
+package com.jmreisswitz.creditcards.infrastructure.persistence.jpa.converter;
 
 import com.jmreisswitz.creditcards.domain.user.User;
 import com.jmreisswitz.creditcards.domain.user.UserId;
 import com.jmreisswitz.creditcards.domain.user.UserPassword;
 import com.jmreisswitz.creditcards.domain.user.Username;
-import com.jmreisswitz.creditcards.infrastructure.persistence.mysql.entity.JpaUser;
+import com.jmreisswitz.creditcards.infrastructure.persistence.jpa.entity.JpaUser;
 
 import java.time.Instant;
 import java.util.Date;

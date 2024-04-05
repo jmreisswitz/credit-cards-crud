@@ -17,11 +17,18 @@ public class SpringCreditCardDataEncoder implements CreditCardDataEncoder {
     public CreditCardData encode(CreditCardData creditCard) {
         return new CreditCardData(
                 encode(creditCard.number()),
-                new CreditCardCvv(passwordEncoder.encode(creditCard.cvv().value())),
+                encodeCvv(creditCard),
                 creditCard.expireDate(),
                 creditCard.lastFourDigits(),
                 creditCard.holder()
         );
+    }
+
+    private CreditCardCvv encodeCvv(CreditCardData creditCard) {
+        if (creditCard.cvv() == null) {
+            return null;
+        }
+        return new CreditCardCvv(passwordEncoder.encode(creditCard.cvv().value()));
     }
 
     @Override

@@ -1,10 +1,10 @@
-package com.jmreisswitz.creditcards.infrastructure.persistence.mysql;
+package com.jmreisswitz.creditcards.infrastructure.persistence.jpa;
 
 import com.jmreisswitz.creditcards.domain.user.User;
 import com.jmreisswitz.creditcards.domain.user.UserRepository;
 import com.jmreisswitz.creditcards.domain.user.Username;
-import com.jmreisswitz.creditcards.infrastructure.persistence.mysql.converter.JpaUserConverter;
-import com.jmreisswitz.creditcards.infrastructure.persistence.mysql.jparepository.JpaUserRepository;
+import com.jmreisswitz.creditcards.infrastructure.persistence.jpa.converter.JpaUserConverter;
+import com.jmreisswitz.creditcards.infrastructure.persistence.jpa.jparepository.JpaUserRepository;
 
 public class JpaAdaptedUserRepository implements UserRepository {
 

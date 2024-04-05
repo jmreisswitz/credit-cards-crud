@@ -5,8 +5,8 @@ import com.jmreisswitz.creditcards.domain.creditcard.*;
 public class SaveCreditCardRequest {
     private String number;
     private String cvv;
-    private int expireMonth;
-    private int expireYear;
+    private Integer expireMonth;
+    private Integer expireYear;
     private String holderName;
 
     public SaveCreditCardRequest() {
@@ -16,10 +16,10 @@ public class SaveCreditCardRequest {
     public CreditCardData asCreditCardData() {
         return new CreditCardData(
                 new CreditCardNumber(number),
-                new CreditCardCvv(cvv),
-                new ExpireDate(expireYear, expireMonth),
+                cvv == null? null : new CreditCardCvv(cvv),
+                expireMonth == null ? null : new ExpireDate(expireYear, expireMonth),
                 number.substring(number.length() - 4),
-                new CreditCardHolder(holderName)
+                holderName == null ? null : new CreditCardHolder(holderName)
         );
     }
 

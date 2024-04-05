@@ -18,5 +18,21 @@ CREATE TABLE credit_card (
     FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
+CREATE TABLE credit_card_batch (
+    id SERIAL PRIMARY KEY,
+    user_id BIGINT UNSIGNED NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    date TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+);
 
+CREATE TABLE credit_card_batch_line (
+    credit_card_batch_id BIGINT UNSIGNED NOT NULL,
+    identifier VARCHAR(255) NOT NULL primary key,
+    credit_card_number VARCHAR(255) NOT NULL,
+    last_four_digits VARCHAR(4) NOT NULL,
+    status VARCHAR(125) NOT NULL,
+    FOREIGN KEY (credit_card_batch_id) REFERENCES credit_card_batch(id)
+)
 

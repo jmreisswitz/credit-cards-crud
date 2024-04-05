@@ -21,6 +21,7 @@ public class EncodedCreditCardBatchRepository implements CreditCardBatchReposito
     @Override
     public void save(CreditCardBatch creditCardBatch) {
         var encodedCreditCardBatch = new CreditCardBatch(
+                creditCardBatch.id(),
                 creditCardBatch.userId(),
                 creditCardBatch.name(),
                 creditCardBatch.date(),

@@ -7,15 +7,23 @@ import com.jmreisswitz.creditcards.domain.user.UserId;
 import java.time.LocalDate;
 import java.util.Collection;
 
-import static com.jmreisswitz.creditcards.domain.creditcard.batch.CreditCardBatchLineStatus.TO_BE_PROCESSED;
 
 public class CreditCardBatch {
+    private Integer id;
     private final UserId userId;
     private final String name;
     private final LocalDate date;
     private Collection<Line> creditCards;
 
     public CreditCardBatch(UserId userId, String name, LocalDate date, Collection<Line> creditCards) {
+        this.userId = userId;
+        this.name = name;
+        this.date = date;
+        this.creditCards = creditCards;
+    }
+
+    public CreditCardBatch(Integer id, UserId userId, String name, LocalDate date, Collection<Line> creditCards) {
+        this.id = id;
         this.userId = userId;
         this.name = name;
         this.date = date;
@@ -34,7 +42,7 @@ public class CreditCardBatch {
 
     public void process(SaveCreditCardDomainService saveCreditCardService) {
         creditCards().stream()
-                .filter(line -> line.status() == TO_BE_PROCESSED)
+                .filter(line -> line.status() == CreditCardBatchLineStatus.TO_BE_PROCESSED)
                 .forEach(line -> line.process(userId, saveCreditCardService));
     }
 
@@ -57,6 +65,14 @@ public class CreditCardBatch {
 
     public Collection<Line> creditCards() {
         return creditCards;
+    }
+
+    public Integer id() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public static class Line {
